@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import { routes } from './routes/index';
+import routes from './routes/index';
 
 // app router
 // 创建一个可以被 Vue 应用程序使用的路由实例
