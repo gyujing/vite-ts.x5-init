@@ -18,8 +18,7 @@
 // }
 
 declare global {
-
   interface Window {
-    baseUrl: string
+    baseUrl: string;
   }
 }

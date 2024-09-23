@@ -1,16 +1,18 @@
-import { RouteRecordRaw } from 'vue-router'
+import { RouteRecordRaw } from 'vue-router';
 
-export const routes: RouteRecordRaw[] = [
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     redirect: '/index',
   },
   {
-    name: "index",
+    name: 'index',
     path: '/index',
-    component: () => import("../../views/Index/index.vue"),
+    component: () => import('../../views/Index/index.vue'),
     meta: {
       title: '首页',
     },
-  }
+  },
 ];
+
+export default routes;

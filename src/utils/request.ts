@@ -1,11 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
-var pro = "production" == import.meta.env.MODE;
+const pro = import.meta.env.MODE === 'production';
 
-var baseUrl = pro
-  ? (window as any).baseUrl
-  : "";
-
+const baseUrl = pro ? (window as any).baseUrl : '';
 
 const initialize = () => {
   const service = axios.create({
@@ -16,14 +13,13 @@ const initialize = () => {
   });
   service.interceptors.request.use(
     async (config) => {
-
       return config;
-    }
-    , function (error) {
+    },
+    function (error) {
       // 对请求错误做些什么
       return Promise.reject(error);
-    }
-  )
+    },
+  );
   service.interceptors.response.use(
     /**
      * If you want to get http information such as headers or status
@@ -45,42 +41,39 @@ const initialize = () => {
       //     }
 
       //   }
-      const headers = response.headers;
+      const { headers } = response;
 
       // console.log(headers);
       // console.log(response);
-      if (headers["content-type"] === "application/vnd.ms-excel;charset=utf-8") {
+      if (headers['content-type'] === 'application/vnd.ms-excel;charset=utf-8') {
         return response;
       }
       if (statusCode !== 200) {
-        return Promise.reject(new Error(res.message || "Error"));
-      } else {
-        switch (res.code) {
-          case 408:
-            // ElMessage.error(res.message || res.msg || "Error")
+        return Promise.reject(new Error(res.message || 'Error'));
+      }
+      switch (res.code) {
+        case 408:
+          // ElMessage.error(res.message || res.msg || "Error")
 
-            // const store = useUserStore();
-            // store.logout(true);
+          // const store = useUserStore();
+          // store.logout(true);
 
-        
-
-            return Promise.reject(res)
-          default:
-            return res;
-        }
+          return Promise.reject(res);
+        default:
+          return res;
       }
     },
     (error) => {
       //  debugger
       // console.log("err" + error); // for debug
-      var errorMessage = "";
-      errorMessage = error.message;
+      // let errorMessage = '';
+      // errorMessage = error.message;
       // ElMessage.error(errorMessage)
       return Promise.reject(error);
-    }
+    },
   );
 
-  return service
-}
+  return service;
+};
 const baseObj = { service: initialize(), baseUrl };
 export default baseObj;

@@ -1,13 +1,8 @@
-import type {
-  ComponentRenderProxy,
-  VNode,
-  VNodeChild,
-  ComponentPublicInstance,
-  FunctionalComponent,
-  PropType as VuePropType,
-} from 'vue';
+import type { ComponentRenderProxy, VNode, VNodeChild, ComponentPublicInstance, FunctionalComponent, PropType as VuePropType } from 'vue';
 
 declare global {
+  declare type Recordable<T = any> = Record<string, T>;
+
   const __APP_INFO__: {
     pkg: {
       name: string;
@@ -24,7 +19,6 @@ declare global {
 
   // vue
   declare type PropType<T> = VuePropType<T>;
-  declare type VueNode = VNodeChild | JSX.Element;
 
   export type Writable<T> = {
     -readonly [P in keyof T]: T[P];
@@ -32,7 +26,7 @@ declare global {
 
   declare type Nullable<T> = T | null;
   declare type NonNullable<T> = T extends null | undefined ? never : T;
-  declare type Recordable<T = any> = Record<string, T>;
+
   declare type ReadonlyRecordable<T = any> = {
     readonly [key: string]: T;
   };
@@ -52,9 +46,6 @@ declare global {
   declare interface WheelEvent {
     path?: EventTarget[];
   }
-  interface ImportMetaEnv extends ViteEnv {
-    __: unknown;
-  }
 
   declare interface ViteEnv {
     VITE_PORT: number;
@@ -71,6 +62,9 @@ declare global {
     VITE_LEGACY: boolean;
     VITE_USE_IMAGEMIN: boolean;
     VITE_GENERATE_UI: string;
+  }
+  interface ImportMetaEnv extends ViteEnv {
+    __: unknown;
   }
 
   declare function parseInt(s: string | number, radix?: number): number;
@@ -92,10 +86,10 @@ declare global {
       [elem: string]: any;
     }
   }
+
+  declare type VueNode = VNodeChild | JSX.Element;
 }
 
 declare module 'vue' {
-  export type JSXComponent<Props = any> =
-    | { new (): ComponentPublicInstance<Props> }
-    | FunctionalComponent<Props>;
+  export type JSXComponent<Props = any> = { new (): ComponentPublicInstance<Props> } | FunctionalComponent<Props>;
 }
